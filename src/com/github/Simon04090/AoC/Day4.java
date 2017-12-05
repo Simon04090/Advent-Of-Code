@@ -522,7 +522,22 @@ class Day4 {
     public static void main(String[] args) {
         prepareList();
         System.out.println(part1());
+        System.out.println(part2());
 
+    }
+
+    private static int part2() {
+        int i = 0;
+        for (String[] strings : list) {
+            if (Arrays.stream(strings).count() != Arrays.stream(strings).filter(s -> {
+                int[] a2 = s.chars().sorted().toArray();
+                //noinspection StringEquality
+                return Arrays.stream(strings).parallel().filter(s1 -> s1 != s).noneMatch(s1 -> Arrays.equals(s1.chars().sorted().toArray(), a2));
+            }).count()) {
+                i++;
+            }
+        }
+        return list.size() - i;
     }
 
     private static int part1() {
