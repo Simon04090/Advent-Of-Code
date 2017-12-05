@@ -9,18 +9,34 @@ public class Day5 {
     public static void main(String[] args) {
         prepareInput();
         System.out.println(part1());
+        prepareInput();
+        System.out.println(part2());
+
+
+    }
+
+    private static int part2() {
+        return calc(true);
     }
 
     private static int part1() {
+        return calc(false);
+    }
+
+    private static int calc(boolean part) {
         int i = 0;
         int x = 0;
         do {
             int j = ints[i];
-            ints[i]++;
+            edit(i, part);
             i += j;
             x++;
         } while (i >= 0 && i < ints.length);
         return x;
+    }
+
+    private static void edit(int i, boolean part) {
+        ints[i]+=part?ints[i]>=3?-1:1:1;
     }
 
     private static void prepareInput() {
