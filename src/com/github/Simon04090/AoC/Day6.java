@@ -12,7 +12,12 @@ public class Day6 {
     public static void main(String[] args) {
         prepareInput();
         System.out.println(part1());
+        System.out.println(part2());
 
+    }
+
+    private static int part2() {
+        return list.size() - list.indexOf(collect);
     }
 
     private static int part1() {
