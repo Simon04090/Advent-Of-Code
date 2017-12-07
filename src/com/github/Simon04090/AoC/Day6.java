@@ -5,32 +5,46 @@ import java.util.Arrays;
 import java.util.stream.Collectors;
 
 public class Day6 {
-    public static final String input = "14\t0\t15\t12\t11\t11\t3\t5\t1\t6\t8\t4\t9\t1\t8\t4";
-    public static Integer[] ints;
+    private static final String input = "14\t0\t15\t12\t11\t11\t3\t5\t1\t6\t8\t4\t9\t1\t8\t4";
     private static ArrayList<Integer> collect;
-    private static ArrayList<ArrayList<Integer>> list;
+    private static final ArrayList<ArrayList<Integer>> list = new ArrayList<>();
 
     public static void main(String[] args) {
         prepareInput();
-        int i = 0;
-        while (isB()) {
-            ArrayList<Integer> step = step();
-
-            list.add(step);
-            i++;
-        }
-        System.out.println(i);
+        System.out.println(part1());
+        System.out.println(part2());
 
     }
 
-    private static boolean isB() {
-        long y = (long) list.size();
-        long x = list.stream().distinct().count();
-        return x == y;
+    private static int part2() {
+        return list.size() - list.indexOf(collect);
+    }
+
+    private static int part1() {
+        int i = 0;
+        ArrayList<Integer> lastStep = new ArrayList<>(collect);
+        while (!isRepeat(lastStep)) {
+            list.add(lastStep);
+            lastStep = step();
+
+            i++;
+            collect = new ArrayList<>(lastStep);
+        }
+        return i;
+    }
+
+    private static boolean isRepeat(ArrayList<Integer> step) {
+        if (list.size()==0) return false;
+        for (ArrayList<Integer> integers : list) {
+            if (step.equals(integers)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private static ArrayList<Integer> step() {
-        int i = collect.stream().max(Integer::compareTo).get();
+        @SuppressWarnings("ConstantConditions") int i = collect.stream().max(Integer::compareTo).get();
         int index = collect.indexOf(i);
         ArrayList<Integer> integerArrayList = new ArrayList<>(collect);
         integerArrayList.set(index, 0);
